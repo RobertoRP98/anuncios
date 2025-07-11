@@ -14,8 +14,8 @@ class Municipio extends Model
         return $this->belongsTo(State::class, 'state_id');
     }
 
-     public function posts(){
-        return $this->hasMany(Post::class);
+     public function anuncios(){
+        return $this->hasMany(Anuncio::class);
     }
 
 

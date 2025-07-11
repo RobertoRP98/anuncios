@@ -10,8 +10,8 @@ class Category extends Model
 
     protected $fillable = ['name','slug'];
 
-    public function post(){
-        return $this->hasMany(Post::class);
+    public function anuncios(){
+        return $this->hasMany(Anuncio::class);
     }
 
     public function getRouteKeyName()

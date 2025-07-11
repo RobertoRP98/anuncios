@@ -14,8 +14,8 @@ class State extends Model
         return $this->hasMany(Municipio::class);
     }
 
-    public function posts(){
-        return $this->hasMany(Post::class);
+    public function anuncios(){
+        return $this->hasMany(Anuncio::class);
     }
 
     public function getRouteKeyName()
