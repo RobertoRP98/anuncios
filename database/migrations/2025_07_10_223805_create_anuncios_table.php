@@ -37,6 +37,9 @@ return new class extends Migration
             // Otros
             $table->boolean('is_active')->default(true); // Si está visible o no
             $table->timestamps();
+
+            $table->foreignId('plan_id')->nullable()->constrained()->onDelete('set null');
+
         });
     }
 

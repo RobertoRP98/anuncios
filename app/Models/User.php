@@ -54,4 +54,8 @@ class User extends Authenticatable
     {
         $this->attributes['curp'] = strtoupper($value);
     }
+
+     public function anuncios(){
+        return $this->hasMany(Anuncio::class);
+    }
 }

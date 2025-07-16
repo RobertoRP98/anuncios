@@ -11,7 +11,7 @@ class StoreAnuncioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,20 @@ class StoreAnuncioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'titulo' => 'required',
+            'category_id' => 'required',
+            'state_id' => 'required',
+            'municipio_id' => 'required',
+            'body' => 'required',
+            'is_active' => 'required',
+            'plan_id' => 'nullable',
+        ];
+    }
+
+        public function messages(){
+        return [
+            'titulo.required' => 'El titulo es requerido',
+            'body.required' => 'La descripción es requerida'
         ];
     }
 }

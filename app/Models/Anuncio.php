@@ -22,4 +22,31 @@ class Anuncio extends Model
         'ends_at',
         'is_active'
     ];
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
+
+      public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+      public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+      public function municipio()
+    {
+        return $this->belongsTo(Municipio::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    
 }
