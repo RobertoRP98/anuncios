@@ -13,30 +13,4 @@
 </div>
 @endsection
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const modalElement = document.getElementById('modalPlanes');
-        let modalInstance = bootstrap.Modal.getInstance(modalElement);
-        if (!modalInstance) {
-            modalInstance = new bootstrap.Modal(modalElement);
-        }
-
-        document.querySelectorAll('[data-plan-id]').forEach(button => {
-            button.addEventListener('click', function () {
-                const planId = this.getAttribute('data-plan-id');
-                const planText = this.textContent.trim();
-
-                // Set hidden input value
-                document.getElementById('plan_id').value = planId;
-
-                // Change main button text
-                const botonPrincipal = document.getElementById('btnSeleccionarPlan');
-                botonPrincipal.textContent = `Seleccionado: ${planText}`;
-
-                // Hide modal
-                modalInstance.hide();
-            });
-        });
-    });
-</script>
 

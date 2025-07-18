@@ -93,39 +93,28 @@
          </div>
 
 
-         <div class="col-md-6 text-center mt-3">
-             <button type="button" id="btnSeleccionarPlan" class="btn btn-primary" data-bs-toggle="modal"
-                 data-bs-target="#modalPlanes">
-                 Agregar más días de publicidad
-             </button>
-         </div>
+         <div class="col-md-5 text-center mt-3">
+             <div class="mb-3">
+                 <label for="plan_id" class="form-label">Ver planes (opcional)</label>
 
+                 <select name="plan_id" id="plan_id" class="form-select border border-secondary">
+                     <option class="text-center" value="">Ver planes</option>
+                     @foreach ($planes as $plan)
+                         <option value="{{ $plan->id }}" @if (old('plan_id') == $plan->id) selected @endif
+                             @class([
+                                 'bg-warning text-dark' => $plan->id == 1, // Oro
+                                 'bg-secondary text-white' => $plan->id == 2, // Plata
+                                 'bg-light text-dark' => $plan->id == 3, // Bronce
+                             ])>
+                            {{ $plan->descripcion }}
+                         </option>
+                     @endforeach
+                     <option class="text-center" value="">No deseo publicarme más días (publicación básica)
+                     </option>
+                 </select>
 
-         <!-- Modal -->
-         <div class="modal fade" id="modalPlanes" tabindex="-1" aria-labelledby="modalPlanesLabel" aria-hidden="true">
-             <div class="modal-dialog modal-dialog-centered">
-                 <div class="modal-content">
-                     <div class="modal-header">
-                         <h5 class="modal-title" id="modalPlanesLabel">Selecciona un Plan</h5>
-                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                     </div>
-                     <div class="modal-body text-center">
-                         <div class="d-grid gap-2">
-                             <button type="button" class="btn btn-success" data-plan-id="1">Plan Oro - 7 días + 3 dias
-                                 de regalo -
-                                 Prioridad mas alta</button>
-                             <button type="button" class="btn btn-secondary" data-plan-id="2">Plan Plata - 5 días + 3 dias de regalo -
-                                 Prioridad
-                                 media</button>
-                             <button type="button" class="btn btn-light" data-plan-id="3">Plan - Bronce 4 dias + 2 días -
-                                 Proridad baja</button>
-                         </div>
-                     </div>
-                 </div>
              </div>
          </div>
-
-         <input type="hidden" name="plan_id" id="plan_id">
 
      </div>
 

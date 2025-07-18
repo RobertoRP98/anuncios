@@ -9,7 +9,7 @@ class Anuncio extends Model
     protected $table = 'anuncios';
 
     protected $fillable = [
-        'title',
+        'titulo',
         'slug',
         'body',
         'user_id',
@@ -20,7 +20,8 @@ class Anuncio extends Model
         'premium_level',
         'starts_at',
         'ends_at',
-        'is_active'
+        'is_active',
+        'plan_id'
     ];
 
     public function plan()
@@ -47,6 +48,7 @@ class Anuncio extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
 
     
 }

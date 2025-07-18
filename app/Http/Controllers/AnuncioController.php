@@ -32,9 +32,10 @@ class AnuncioController extends Controller
         $estados = State::all();
         $municipios = Municipio::all();
         $categorias = Category::all();
+        $planes = Plan::all();
         $anuncio = new Anuncio();
 
-        return view('anuncios.create', compact(['estados', 'municipios', 'categorias', 'anuncio']));
+        return view('anuncios.create', compact(['estados', 'municipios', 'categorias', 'anuncio','planes']));
     }
 
     /**
@@ -44,35 +45,14 @@ class AnuncioController extends Controller
     {
         $anuncio = new Anuncio();
 
-        $anuncio->title = $request->titulo;
+        $anuncio->titulo = $request->titulo;
         $anuncio->slug = Str::slug($request->titulo);
         $anuncio->body = $request->body;
+        $anuncio->user_id = Auth::user()->id;
         $anuncio->category_id = $request->category_id;
         $anuncio->state_id = $request->state_id;
         $anuncio->municipio_id = $request->municipio_id;
-        $anuncio->user_id = Auth::user()->id;
-
-
-        if ($request->filled('plan_id')) {
-            $plan = Plan::findOrFail($request->plan_id);
-            $anuncio->plan_id = $plan->id;
-            $anuncio->is_premium = true;
-            $anuncio->premium_level = strtolower($plan->prioridad);
-            $anuncio->starts_at = now();
-            $anuncio->end_at = now()->addDays($plan->dias);
-        } else {
-            $anuncio->is_premium = false;
-            $anuncio->starts_at = now();
-            $anuncio->ends_at = now()->addDays(3);
-        }
-
-        $anuncio->save();
-
-        // Redirigir a pago si seleccionó plan
-        if ($request->filled('plan_id')) {
-            // Aquí deberías redirigir a MercadoPago
-            return redirect()->route('checkout.mercadopago', $anuncio->id);
-        }
+        
 
         return redirect()->route('anuncios.index')->with('message', 'Anuncio Creado con exito');
     }
