@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('anuncios', function (Blueprint $table) {
             $table->id();
           
-            $table->string('title');
+            $table->string('titulo');
                 // Slug para URL amigable
             $table->string('slug')->unique();
 

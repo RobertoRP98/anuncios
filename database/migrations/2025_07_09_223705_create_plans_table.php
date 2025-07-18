@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('dias');
-            $table->string('prioridad');
             $table->float('precio');
             $table->string('descripcion');
+            $table->enum('prioridad', ['alta', 'media', 'baja']);
+            $table->boolean('visible')->default(true);
             $table->timestamps();
         });
     }
