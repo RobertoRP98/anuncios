@@ -19,7 +19,7 @@ class AnuncioController extends Controller
      */
     public function index()
     {
-        $anuncios = Anuncio::all();
+        $anuncios = Anuncio::paginate();
 
         return view('anuncios.index', compact('anuncios'));
     }
@@ -41,21 +41,38 @@ class AnuncioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAnuncioRequest $request)
-    {
-        $anuncio = new Anuncio();
+   public function store(StoreAnuncioRequest $request)
+{
+    $anuncio = new Anuncio();
+    $anuncio->titulo = $request->titulo;
+    $anuncio->slug = Str::slug($request->titulo);
+    $anuncio->body = $request->body;
+    $anuncio->user_id = Auth::id();
+    $anuncio->category_id = $request->category_id;
+    $anuncio->state_id = $request->state_id;
+    $anuncio->municipio_id = $request->municipio_id;
+    $anuncio->is_active = true;
 
-        $anuncio->titulo = $request->titulo;
-        $anuncio->slug = Str::slug($request->titulo);
-        $anuncio->body = $request->body;
-        $anuncio->user_id = Auth::user()->id;
-        $anuncio->category_id = $request->category_id;
-        $anuncio->state_id = $request->state_id;
-        $anuncio->municipio_id = $request->municipio_id;
-        
+    if ($request->filled('plan_id')) {
+        $plan = Plan::findOrFail($request->plan_id);
+        $anuncio->plan_id = $plan->id;
+        $anuncio->save();
 
-        return redirect()->route('anuncios.index')->with('message', 'Anuncio Creado con exito');
+        // Redirige a Stripe con el ID del anuncio y el plan
+        return redirect()->route('stripe.checkout', [
+            'anuncio_id' => $anuncio->id,
+            'plan_id' => $plan->id,
+        ]);
+    } else {
+        // Publicación gratuita de 3 días
+        $anuncio->is_premium = false;
+        $anuncio->starts_at = now();
+        $anuncio->ends_at = now()->addDays(3);
+        $anuncio->save();
+
+        return redirect()->route('anuncios.index')->with('message', 'Anuncio gratuito creado con éxito.');
     }
+}
 
     /**
      * Display the specified resource.

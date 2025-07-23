@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StateController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\AnuncioController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
@@ -35,4 +36,8 @@ Route::resource('categorias', CategoryController::class)->parameters([
 
 Route::resource('anuncios',AnuncioController::class);
 
+
+Route::get('/stripe/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
+Route::get('/stripe/success', [StripeController::class, 'success'])->name('stripe.success');
+Route::get('/stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
 

@@ -116,6 +116,14 @@
              </div>
          </div>
 
+        @if(old('plan_id'))
+    <div class="text-center mt-4">
+        <p class="text-success fw-bold">Has seleccionado un plan premium</p>
+        <p class="text-muted">Podrás pagar en el siguiente paso</p>
+    </div>
+@endif
+
+
      </div>
 
      <div class="row justify-content-center mt-4">
