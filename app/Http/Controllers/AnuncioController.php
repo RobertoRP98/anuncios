@@ -19,9 +19,10 @@ class AnuncioController extends Controller
      */
     public function index()
     {
-        $anuncios = Anuncio::paginate();
+     $anuncios = Anuncio::paginate(20);
 
         return view('anuncios.index', compact('anuncios'));
+
     }
 
     /**
